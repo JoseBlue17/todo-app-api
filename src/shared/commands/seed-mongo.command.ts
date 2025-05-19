@@ -1,0 +1,30 @@
+import { seeder } from 'nestjs-seeder';
+import { NestFactory } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { AppModule } from 'src/app.module';
+
+function runInitialSeeders() {
+  seeder({
+    imports: [
+      AppModule,
+      ConfigModule,
+      MongooseModule.forFeature([
+        // { name: Example.name, schema: ExampleSchema },
+      ]),
+    ],
+  }).run([
+    /* ExampleSeeder */
+  ]);
+}
+
+async function main() {
+  const app = await NestFactory.createApplicationContext(AppModule, {
+    logger: ['error'],
+  });
+  runInitialSeeders();
+  return app.close();
+}
+
+main();
