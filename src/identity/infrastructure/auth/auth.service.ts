@@ -7,9 +7,9 @@ import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions, JwtService, JwtSignOptions } from '@nestjs/jwt';
 
 import { HashService } from 'src/shared/hash';
-import { User } from '../domain/user.model';
-import { UserRepository } from './repositories/user.repository';
-import { UserDocument } from './schemas/user.schema';
+import { User } from '../../domain/user.model';
+import { UserRepository } from '../repositories/user.repository';
+import { UserDocument } from '../schemas/user.schema';
 
 type Credentials = {
   email?: string;

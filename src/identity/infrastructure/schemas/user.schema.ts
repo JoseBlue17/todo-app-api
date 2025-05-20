@@ -4,7 +4,6 @@ import { Language } from 'src/shared/enums';
 
 @Schema({ _id: false })
 export class Address {}
-
 @Schema({ _id: false })
 export class UserProfile {
   @Prop({ required: true })

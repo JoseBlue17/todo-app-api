@@ -4,7 +4,7 @@ import { Recaptcha } from '@nestlab/google-recaptcha';
 
 import { Public } from 'src/shared/validation';
 
-import { CreateUserCommand } from '../application/create-user/create-user.command';
+import { CreateUserCommand } from '../../application/create-user/create-user.command';
 
 import { CreateUserDto } from './dto/create-user.dto';
 

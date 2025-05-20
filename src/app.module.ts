@@ -18,7 +18,6 @@ import { ClientRouteBuilder } from './shared/utils';
 import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 import { MailModule } from './shared/mail';
 import { IdentityModule } from './identity/infrastructure/identity.module';
-import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [

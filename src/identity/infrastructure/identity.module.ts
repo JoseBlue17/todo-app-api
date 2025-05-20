@@ -12,8 +12,8 @@ import { CreateUserHandler } from '../application/create-user/create-user.handle
 import { User, UserSchema } from './schemas/user.schema';
 import { UserRepository } from './repositories/user.repository';
 
-import { AuthService } from './auth.service';
-import { UsersController } from './users.controller';
+import { AuthService } from './auth/auth.service';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
