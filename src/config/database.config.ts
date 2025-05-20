@@ -10,7 +10,7 @@ export default registerAs(
   'database',
   (): DatabaseConfig => ({
     mongo: {
-      uri: ensureEnvVar(process.env.MONGODB_URI),
+      uri: ensureEnvVar('MONGODB_URI'),
       autoCreate: true,
       autoIndex: true,
     },

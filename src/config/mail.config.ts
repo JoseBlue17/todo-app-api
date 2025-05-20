@@ -9,12 +9,12 @@ export default registerAs('mail', (): MailModuleOptions => {
   return {
     transport: createTransport({
       port,
-      host: ensureEnvVar(process.env.MAIL_HOST),
-      from: ensureEnvVar(process.env.MAIL_FROM),
+      host: ensureEnvVar('MAIL_HOST'),
+      from: ensureEnvVar('MAIL_FROM'),
       secure: port === 465,
       auth: {
-        user: ensureEnvVar(process.env.MAIL_USER),
-        pass: ensureEnvVar(process.env.MAIL_PASSWORD),
+        user: ensureEnvVar('MAIL_USER'),
+        pass: ensureEnvVar('MAIL_PASSWORD'),
       },
       tls: { rejectUnauthorized: false },
     }),

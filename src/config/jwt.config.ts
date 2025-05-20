@@ -5,7 +5,7 @@ import { ensureEnvVar } from './env-variable.utils';
 export default registerAs(
   'jwt',
   (): JwtModuleOptions => ({
-    secret: ensureEnvVar(process.env.JWT_SECRET),
+    secret: ensureEnvVar('JWT_SECRET'),
     signOptions: {
       expiresIn: '12h',
     },
