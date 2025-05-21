@@ -14,6 +14,7 @@ import { UserRepository } from './repositories/user.repository';
 
 import { AuthService } from './auth/auth.service';
 import { UsersController } from './users/users.controller';
+import { AuthController } from './auth/auth.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { UsersController } from './users/users.controller';
     JwtModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  controllers: [UsersController],
+  controllers: [UsersController, AuthController],
   providers: [
     AuthService,
     ClientRouteBuilder,
