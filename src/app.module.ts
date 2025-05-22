@@ -23,6 +23,10 @@ import {
   User,
   UserSchema,
 } from './identity/infrastructure/schemas/user.schema';
+import { TasksModule } from './todo/infrastructure/tasks.module';
+import { TaskSeeder } from './shared/seed/task.seeder';
+import { Task, TaskSchema } from './todo/infrastructure/schemas/task.schema';
+import { JwtStrategy } from './shared/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -53,11 +57,15 @@ import {
       useFactory: (config: ConfigService) => config.get('database.mongo'),
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }]),
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [
     UserSeeder,
+    TaskSeeder,
     AppService,
+    JwtStrategy,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     {
       provide: ClientRouteBuilder,
