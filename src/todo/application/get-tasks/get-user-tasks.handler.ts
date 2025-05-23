@@ -14,6 +14,7 @@ export class GetUserTasksHandler implements IQueryHandler<GetUserTasksQuery> {
   async execute(query: GetUserTasksQuery) {
     return this.taskModel
       .find({ userId: new Types.ObjectId(query.userId) }) //userId a ObjectId
+      .sort({ createdAt: +1 }) // Antiguas primero (-1 para mas reciente)
       .exec();
   }
 }
