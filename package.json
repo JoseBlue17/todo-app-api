@@ -23,7 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "mail:dev": "parcel serve src/shared/mail/templates/development.html",
     "mail:up": "maildev --ip localhost",
-    "mongodb:refresh": "ts-node -r tsconfig-paths/register src/shared/commands/seed-mongo.command.ts --refresh"
+    "mongodb:refresh": "node dist/shared/commands/seed-mongo.command --refresh"
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
