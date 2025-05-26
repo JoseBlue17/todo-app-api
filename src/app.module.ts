@@ -18,11 +18,6 @@ import { ClientRouteBuilder } from './shared/utils';
 import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 import { MailModule } from './shared/mail';
 import { IdentityModule } from './identity/infrastructure/identity.module';
-import { UserSeeder } from './shared/seed/user.seeder';
-import {
-  User,
-  UserSchema,
-} from './identity/infrastructure/schemas/user.schema';
 
 @Module({
   imports: [
@@ -52,11 +47,9 @@ import {
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('database.mongo'),
     }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [AppController],
   providers: [
-    UserSeeder,
     AppService,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     {
