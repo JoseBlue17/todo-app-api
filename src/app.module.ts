@@ -18,9 +18,11 @@ import { ClientRouteBuilder } from './shared/utils';
 import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 import { MailModule } from './shared/mail';
 import { IdentityModule } from './identity/infrastructure/identity.module';
-
+import { TasksModule } from './todo/infrastructure/tasks.module';
+import { JwtStrategy } from './shared/strategies/jwt.strategy';
 @Module({
   imports: [
+    TasksModule,
     ConfigModule.forRoot({
       load: [
         apiConfig,
@@ -51,6 +53,7 @@ import { IdentityModule } from './identity/infrastructure/identity.module';
   controllers: [AppController],
   providers: [
     AppService,
+    JwtStrategy,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     {
       provide: ClientRouteBuilder,
