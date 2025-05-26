@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 @Schema({ timestamps: true }) // createdAt, updatedAt
 export class Task extends Document {
@@ -17,9 +17,6 @@ export class Task extends Document {
 
   @Prop()
   dueDate?: Date;
-
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  userId: Types.ObjectId;
 }
 
 export type TaskDocument = Task & Document;
