@@ -7,13 +7,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { HashService } from 'src/shared/hash';
 import { ClientRouteBuilder } from 'src/shared/utils';
 
-import { CreateUserHandler } from '../application/create-user/create-user.handler';
-
 import { User, UserSchema } from './schemas/user.schema';
 import { UserRepository } from './repositories/user.repository';
-
 import { AuthService } from './auth.service';
 import { UsersController } from './users.controller';
+
+import { CreateUserHandler } from '../application/create-user/create-user.handler';
+import { loginHandler } from '../application/login/login.handler';
 
 @Module({
   imports: [
@@ -29,6 +29,7 @@ import { UsersController } from './users.controller';
     HashService,
     CreateUserHandler,
     UserRepository,
+    loginHandler,
   ],
   exports: [UserRepository],
 })
