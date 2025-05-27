@@ -14,6 +14,7 @@ import { UserRepository } from './repositories/user.repository';
 
 import { AuthService } from './auth.service';
 import { UsersController } from './users.controller';
+import { loginHandler } from '../application/login/login.handler';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UsersController } from './users.controller';
     HashService,
     CreateUserHandler,
     UserRepository,
+    loginHandler,
   ],
   exports: [UserRepository],
 })
