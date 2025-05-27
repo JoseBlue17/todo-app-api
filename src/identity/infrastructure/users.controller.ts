@@ -1,19 +1,19 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Recaptcha } from '@nestlab/google-recaptcha';
 
 import { Public } from 'src/shared/validation';
 
 import { CreateUserCommand } from '../application/create-user/create-user.command';
-import { AuthService } from '../infrastructure/auth.service';
 import { LoginDto } from './dto/login.dto';
+import { loginQuery } from '../application/login/login.query';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly authService: AuthService,
+    private readonly queryBus: QueryBus,
   ) {}
 
   @Post('sign-up')
@@ -26,6 +26,6 @@ export class UsersController {
   @Post('login')
   @Public()
   async login(@Body() body: LoginDto) {
-    return this.authService.validateUser(body, { generateToken: true });
+    return this.queryBus.execute(new loginQuery(body));
   }
 }
