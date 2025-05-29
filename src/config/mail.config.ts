@@ -1,6 +1,8 @@
 import { registerAs } from '@nestjs/config';
 import { createTransport } from 'nodemailer';
+
 import { MailModuleOptions } from 'src/shared/mail';
+
 import { ensureEnvVar, validateNumberEnvVar } from './env-variable.utils';
 
 export default registerAs('mail', (): MailModuleOptions => {

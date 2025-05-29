@@ -1,14 +1,16 @@
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
-import {
-  Task,
-  TaskDocument,
-} from '../../todo/infrastructure/schemas/task.schema';
+
 import {
   User,
   UserDocument,
 } from '../../identity/infrastructure/schemas/user.schema';
+
+import {
+  Task,
+  TaskDocument,
+} from '../../todo/infrastructure/schemas/task.schema';
 
 @Injectable()
 export class TaskSeeder {

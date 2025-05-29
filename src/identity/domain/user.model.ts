@@ -1,4 +1,5 @@
 import { Language } from 'src/shared/enums';
+
 import { Address, UserDocument } from '../infrastructure/schemas/user.schema';
 
 type ExtendedUserDocument = UserDocument & {

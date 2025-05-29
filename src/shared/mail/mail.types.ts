@@ -1,5 +1,6 @@
 import { ModuleMetadata } from '@nestjs/common';
 import { SendMailOptions, Transporter } from 'nodemailer';
+
 import { Language } from 'src/shared/enums';
 
 export type MailContent = Promise<SendMailOptions>;

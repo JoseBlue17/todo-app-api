@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom';
-import { Language } from 'src/shared/enums';
+
 import { RecoverPasswordTemplate } from 'src/identity/application/recover-password/recover-password.template';
+
+import { Language } from 'src/shared/enums';
 
 const DATA = {
   firstName: 'John',

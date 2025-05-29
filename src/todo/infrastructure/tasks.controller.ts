@@ -1,6 +1,8 @@
 import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
+
 import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
+
 import { GetUserTasksQuery } from '../application/get-tasks/get-user-tasks.query';
 
 @Controller('tasks')

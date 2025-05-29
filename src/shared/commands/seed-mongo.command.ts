@@ -4,9 +4,11 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppModule } from 'src/app.module';
+
 import { TaskSeeder } from '../seed/task.seeder';
-import { Task, TaskSchema } from 'src/todo/infrastructure/schemas/task.schema';
 import { UserSeeder } from '../seed/user.seeder';
+
+import { Task, TaskSchema } from 'src/todo/infrastructure/schemas/task.schema';
 import {
   User,
   UserSchema,
