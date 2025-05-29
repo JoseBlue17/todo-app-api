@@ -51,6 +51,4 @@ export class Task {
       updatedAt: document.updatedAt,
     });
   }
-
-  // markAsCompleted() { this.completed = true; } revisión futura
 } 

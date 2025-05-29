@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-@Schema({ timestamps: true }) // createdAt, updatedAt
+@Schema({ timestamps: true })
 export class Task extends Document {
   @Prop({ required: true })
   title: string;
