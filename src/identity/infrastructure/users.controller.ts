@@ -6,7 +6,7 @@ import { Public } from 'src/shared/validation';
 
 import { CreateUserCommand } from '../application/create-user/create-user.command';
 import { LoginDto } from './dto/login.dto';
-import { loginQuery } from '../application/login/login.query';
+import { LoginQuery } from '../application/login/login.query';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
@@ -16,16 +16,16 @@ export class UsersController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @Post('sign-up')
+  @Post('/sign-up')
   @Public()
   @Recaptcha()
   async signUp(@Body() body: CreateUserDto) {
     return this.commandBus.execute(new CreateUserCommand(body));
   }
 
-  @Post('login')
+  @Post('/login')
   @Public()
   async login(@Body() body: LoginDto) {
-    return this.queryBus.execute(new loginQuery(body));
+    return this.queryBus.execute(new LoginQuery(body));
   }
 }
