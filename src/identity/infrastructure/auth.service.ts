@@ -16,6 +16,11 @@ type ValidationOptions = {
   generateToken?: boolean;
 };
 
+export type LoginCredentials = {
+  email: string;
+  password: string;
+};
+
 @Injectable()
 export class AuthService {
   private readonly jwtOptions: JwtModuleOptions;

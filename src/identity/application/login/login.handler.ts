@@ -1,12 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { loginQuery } from './login.query';
+import { LoginQuery } from './login.query';
 import { AuthService } from '../../infrastructure/auth.service';
 
-@QueryHandler(loginQuery)
-export class loginHandler implements IQueryHandler<loginQuery> {
+@QueryHandler(LoginQuery)
+export class LoginHandler implements IQueryHandler<LoginQuery> {
   constructor(private readonly authService: AuthService) {}
 
-  execute(query: loginQuery): Promise<any> {
+  execute(query: LoginQuery) {
     return this.authService.validateUser(query.loginInfo, {
       generateToken: true,
     });
