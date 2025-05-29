@@ -1,9 +1,8 @@
-import { LoginCredentials } from '../../infrastructure/auth.service';
-
 export class LoginQuery {
-  readonly loginInfo: LoginCredentials;
+  readonly email: string;
+  readonly password: string;
 
-  constructor(loginInfo: LoginCredentials) {
-    this.loginInfo = loginInfo;
+  constructor(params: LoginQuery) {
+    Object.assign(this, params);
   }
 }

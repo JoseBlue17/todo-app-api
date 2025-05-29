@@ -7,7 +7,7 @@ export class LoginHandler implements IQueryHandler<LoginQuery> {
   constructor(private readonly authService: AuthService) {}
 
   execute(query: LoginQuery) {
-    return this.authService.validateUser(query.loginInfo, {
+    return this.authService.validateUser(query, {
       generateToken: true,
     });
   }
