@@ -1,23 +1,24 @@
+import { ConfigService } from '@nestjs/config';
+import { JwtModuleOptions, JwtService, JwtSignOptions } from '@nestjs/jwt';
 import {
   Injectable,
   NotAcceptableException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtModuleOptions, JwtService, JwtSignOptions } from '@nestjs/jwt';
 
 import { HashService } from 'src/shared/hash';
 import { User } from '../domain/user.model';
 import { UserRepository } from './repositories/user.repository';
 import { UserDocument } from './schemas/user.schema';
+import { LoginDto } from './dto/login.dto';
 
-type Credentials = {
-  email?: string;
-  phoneNumber?: string;
-  password: string;
-};
 type ValidationOptions = {
   generateToken?: boolean;
+};
+
+export type LoginCredentials = {
+  email: string;
+  password: string;
 };
 
 @Injectable()
@@ -33,7 +34,7 @@ export class AuthService {
   }
 
   async validateUser(
-    { email, password }: Credentials,
+    { email, password }: LoginDto,
     { generateToken = false }: ValidationOptions = {},
   ) {
     let user: UserDocument;
