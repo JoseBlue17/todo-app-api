@@ -6,6 +6,7 @@ import { TasksController } from './tasks.controller';
 import { Task, TaskSchema } from './schemas/task.schema';
 import { GetUserTasksHandler } from '../application/get-tasks/get-user-tasks.handler';
 import { TaskRepository } from './repositories/tasks.repositories';
+import { ITaskRepository } from '../domain/repositories/task.repository.interface';
 
 @Module({
   imports: [
@@ -13,6 +14,12 @@ import { TaskRepository } from './repositories/tasks.repositories';
     MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }]),
   ],
   controllers: [TasksController],
-  providers: [GetUserTasksHandler, TaskRepository],
+  providers: [
+    GetUserTasksHandler,
+    {
+      provide: ITaskRepository,
+      useClass: TaskRepository,
+    },
+  ],
 })
 export class TasksModule {}
