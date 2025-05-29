@@ -26,6 +26,7 @@ export class UsersController {
   @Post('/login')
   @Public()
   async login(@Body() body: LoginDto) {
-    return this.queryBus.execute(new LoginQuery(body));
+    const loginCredentials = { email: body.email, password: body.password };
+    return this.queryBus.execute(new LoginQuery(loginCredentials));
   }
 }
