@@ -4,6 +4,9 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { CreateUserHandler } from '../application/create-user/create-user.handler';
+import { LoginHandler } from '../application/login/login.handler';
+
 import { HashService } from 'src/shared/hash';
 import { ClientRouteBuilder } from 'src/shared/utils';
 
@@ -11,9 +14,6 @@ import { User, UserSchema } from './schemas/user.schema';
 import { UserRepository } from './repositories/user.repository';
 import { AuthService } from './auth.service';
 import { UsersController } from './users.controller';
-
-import { CreateUserHandler } from '../application/create-user/create-user.handler';
-import { loginHandler } from '../application/login/login.handler';
 
 @Module({
   imports: [
@@ -29,7 +29,7 @@ import { loginHandler } from '../application/login/login.handler';
     HashService,
     CreateUserHandler,
     UserRepository,
-    loginHandler,
+    LoginHandler,
   ],
   exports: [UserRepository],
 })
