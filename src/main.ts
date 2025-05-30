@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const LokiTransport = require('winston-loki');
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
