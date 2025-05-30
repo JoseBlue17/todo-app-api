@@ -31,7 +31,8 @@ export class UserSeeder {
         profile: {
           firstName: 'Usuario',
           lastName: 'Normal',
-          avatarUrl: 'https://th.bing.com/th/id/OIP.gqgy3AdO3w1OxLcHsuJ9XgHaHU?rs=1&pid=ImgDetMain',
+          avatarUrl:
+            'https://th.bing.com/th/id/OIP.gqgy3AdO3w1OxLcHsuJ9XgHaHU?rs=1&pid=ImgDetMain',
         },
         language: 'es',
         phone: '1234567890',

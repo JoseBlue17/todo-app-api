@@ -1,4 +1,4 @@
-import { TaskDocument } from "../infrastructure/schemas/task.schema";
+import { TaskDocument } from '../infrastructure/schemas/task.schema';
 
 type ExtendedTaskDocument = TaskDocument & {
   createdAt?: Date;
@@ -8,10 +8,10 @@ type ExtendedTaskDocument = TaskDocument & {
 export class Task {
   readonly id: string;
   readonly title: string;
-  readonly description?: string;
+  readonly description?: string | null;
   readonly completed: boolean;
-  readonly category?: string;
-  readonly dueDate?: Date;
+  readonly category?: string | null;
+  readonly dueDate?: Date | string | null;
   readonly userId: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
@@ -19,10 +19,10 @@ export class Task {
   constructor(params: {
     id: string;
     title: string;
-    description?: string;
+    description?: string | null;
     completed: boolean;
-    category?: string;
-    dueDate?: Date;
+    category?: string | null;
+    dueDate?: Date | string | null;
     userId: string;
     createdAt?: Date;
     updatedAt?: Date;
@@ -39,16 +39,24 @@ export class Task {
   }
 
   static fromDocument(document: ExtendedTaskDocument): Task {
+    const formatDate = (date?: Date | null): string | null => {
+      if (!date) return null;
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
     return new Task({
       id: String(document._id),
       title: document.title,
       description: document.description,
       completed: document.completed,
       category: document.category,
-      dueDate: document.dueDate,
+      dueDate: formatDate(document.dueDate),
       userId: String(document.userId),
       createdAt: document.createdAt,
       updatedAt: document.updatedAt,
     });
   }
-} 
+}
