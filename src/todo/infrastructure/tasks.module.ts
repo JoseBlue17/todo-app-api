@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ITaskRepository } from '../domain/repositories/task.repository.interface';
-
 import { GetUserTasksHandler } from '../application/get-tasks/get-user-tasks.handler';
 
 import { TasksController } from './tasks.controller';
@@ -18,10 +16,7 @@ import { TaskRepository } from './repositories/tasks.repositories';
   controllers: [TasksController],
   providers: [
     GetUserTasksHandler,
-    {
-      provide: ITaskRepository,
-      useClass: TaskRepository,
-    },
+    TaskRepository,
   ],
 })
 export class TasksModule {}

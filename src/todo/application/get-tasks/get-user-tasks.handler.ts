@@ -1,15 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { ITaskRepository } from '../../domain/repositories/task.repository.interface';
-import { Task } from '../../domain/task.model';
-
 import { GetUserTasksQuery } from './get-user-tasks.query';
+import { TaskRepository } from '../../infrastructure/repositories/tasks.repositories';
 
 @QueryHandler(GetUserTasksQuery)
 export class GetUserTasksHandler implements IQueryHandler<GetUserTasksQuery> {
-  constructor(private readonly taskRepository: ITaskRepository) {}
+  constructor(private readonly taskRepository: TaskRepository) {}
 
-  async execute(query: GetUserTasksQuery): Promise<Task[]> {
+  async execute(query: GetUserTasksQuery) {
     return this.taskRepository.findByUserId(query.userId);
   }
 }
