@@ -1,17 +1,14 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
-import { ITaskRepository } from '../../domain/repositories/task.repository.interface';
+
+import { TaskRepository } from '../../infrastructure/repositories/tasks.repositories';
+
 import { CreateTaskCommand } from './create-task.command';
-import { Task } from '../../domain/task.model';
 
 @CommandHandler(CreateTaskCommand)
 export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
-  constructor(
-    @Inject(ITaskRepository)
-    private readonly taskRepository: ITaskRepository,
-  ) {}
+  constructor(private readonly taskRepository: TaskRepository) {}
 
-  async execute(command: CreateTaskCommand): Promise<Task> {
+  async execute(command: CreateTaskCommand): Promise<any> {
     const defaultCategoryColor = '#FF0000';
 
     let dueDate: Date | null = null;
@@ -21,12 +18,9 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
       if (isNaN(dueDate.getTime())) {
         dueDate = null;
       }
-    } else {
-      dueDate = null;
     }
 
-    const newTask = new Task({
-      id: undefined,
+    const taskData = {
       title: command.title,
       description:
         command.description === undefined ? null : command.description,
@@ -34,7 +28,8 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
       category: command.category || defaultCategoryColor,
       dueDate: dueDate,
       userId: command.userId,
-    });
-    return this.taskRepository.createTask(newTask);
+    };
+
+    return this.taskRepository.createTask(taskData);
   }
 }

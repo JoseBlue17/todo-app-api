@@ -1,4 +1,4 @@
-import { Controller, Get, Request, Post, Body } from '@nestjs/common';
+import { Controller, Get, Req, Post, Body } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 
 import { CreateTaskDto } from '../infrastructure/dto/task.dto';
@@ -14,19 +14,19 @@ export class TasksController {
   ) {}
 
   @Get('/')
-  async getUserTasks(@Request() req: any) {
+  async getUserTasks(@Req() req: any) {
     return this.queryBus.execute(new GetUserTasksQuery(req.user.id));
   }
 
   @Post('/')
-  async createTask(@Body() createTaskDto: CreateTaskDto, @Request() req) {
+  async createTask(@Body() createTaskDto: CreateTaskDto, @Req() req: any) {
     const command = new CreateTaskCommand(
       createTaskDto.title,
       createTaskDto.description,
       createTaskDto.completed,
       createTaskDto.category,
       createTaskDto.dueDate,
-      req.user.userId,
+      req.user.id,
     );
     return this.commandBus.execute(command);
   }
