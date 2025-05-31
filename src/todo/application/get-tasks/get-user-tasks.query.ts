@@ -1,3 +1,3 @@
 export class GetUserTasksQuery {
-  constructor(public readonly userId: string) {}
+  constructor(readonly userId: string) {}
 }
