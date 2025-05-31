@@ -4,14 +4,17 @@ import {
   IsBoolean,
   IsHexColor,
   Matches,
+  IsNotEmpty,
 } from 'class-validator';
 
 export class CreateTaskDto {
   @IsString()
+  @IsNotEmpty()
   title: string;
 
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   description?: string;
 
   @IsBoolean()
@@ -19,6 +22,7 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   @IsHexColor()
   category?: string;
 

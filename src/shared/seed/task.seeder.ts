@@ -26,9 +26,11 @@ export class TaskSeeder {
   }
 
   async seed() {
-    const user = await this.userModel.findOne({ email: 'usuario@correo.com' });
+    const user = await this.userModel.findOne();
     if (!user) {
-      throw new Error('Usuario no encontrado para asociar tareas');
+      throw new Error(
+        'No hay usuarios en la base de datos para asociar tareas',
+      );
     }
 
     await this.taskModel.insertMany([
