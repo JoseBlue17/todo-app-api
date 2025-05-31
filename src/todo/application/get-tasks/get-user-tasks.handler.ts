@@ -1,7 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { GetUserTasksQuery } from './get-user-tasks.query';
 import { TaskRepository } from '../../infrastructure/repositories/tasks.repositories';
+
+import { GetUserTasksQuery } from './get-user-tasks.query';
 
 @QueryHandler(GetUserTasksQuery)
 export class GetUserTasksHandler implements IQueryHandler<GetUserTasksQuery> {

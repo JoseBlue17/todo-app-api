@@ -3,9 +3,10 @@ import {
   IsOptional,
   IsBoolean,
   IsHexColor,
-  Matches,
+  IsDate,
   IsNotEmpty,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateTaskDto {
   @IsString()
@@ -14,7 +15,6 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   description?: string;
 
   @IsBoolean()
@@ -22,13 +22,11 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @IsHexColor()
   category?: string;
 
   @IsOptional()
-  @Matches(/^\d{2}\/\d{2}\/\d{4}$/, {
-    message: 'El formato de fecha debe ser DD/MM/YYYY',
-  })
-  dueDate?: string;
+  @Type(() => Date)
+  @IsDate()
+  dueDate?: Date;
 }
