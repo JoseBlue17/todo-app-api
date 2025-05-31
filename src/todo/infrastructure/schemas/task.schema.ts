@@ -12,7 +12,7 @@ export class Task extends Document {
   @Prop({ required: true })
   completed: boolean;
 
-  @Prop({ default: '#FF0000' })
+  @Prop({ required: true })
   category: string;
 
   @Prop()

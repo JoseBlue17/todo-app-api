@@ -17,7 +17,7 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
       title: command.title,
       description: description,
       completed: false,
-      category: command.category || defaultCategoryColor,
+      category: command.category ?? defaultCategoryColor,
       dueDate: dueDate,
       userId: command.userId,
     };
