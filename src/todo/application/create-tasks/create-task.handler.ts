@@ -1,5 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
+import { formatDateToDDMMYYYY } from '../../../shared/utils/date.utils';
+
 import { TaskRepository } from '../../infrastructure/repositories/tasks.repositories';
 
 import { CreateTaskCommand } from './create-task.command';
@@ -30,6 +32,16 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
       userId: command.userId,
     };
 
-    return this.taskRepository.createTask(taskData);
+    const createdTaskDocument = await this.taskRepository.createTask(taskData);
+
+    const createdTask = createdTaskDocument
+      ? createdTaskDocument.toObject()
+      : null;
+
+    if (createdTask && createdTask.dueDate instanceof Date) {
+      createdTask.dueDate = formatDateToDDMMYYYY(createdTask.dueDate);
+    }
+
+    return createdTask;
   }
 }
