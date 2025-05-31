@@ -17,8 +17,9 @@ export class CreateTaskDto {
   @IsString()
   description?: string;
 
+  @IsOptional()
   @IsBoolean()
-  completed: boolean;
+  completed?: boolean;
 
   @IsOptional()
   @IsString()
