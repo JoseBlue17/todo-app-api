@@ -13,9 +13,7 @@ export class TaskRepository {
   async findByUserId(userId: string): Promise<TaskDocument[]> {
     const userIdObjectId = new Types.ObjectId(userId);
 
-    const tasks = await this.taskModel
-      .find({ userId: userIdObjectId })
-      .exec();
+    const tasks = await this.taskModel.find({ userId: userIdObjectId }).exec();
     return tasks;
   }
 }

@@ -14,9 +14,6 @@ import { TaskRepository } from './repositories/tasks.repositories';
     MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }]),
   ],
   controllers: [TasksController],
-  providers: [
-    GetUserTasksHandler,
-    TaskRepository,
-  ],
+  providers: [GetUserTasksHandler, TaskRepository],
 })
 export class TasksModule {}
