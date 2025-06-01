@@ -8,7 +8,7 @@ import { CreateTaskCommand } from './create-task.command';
 export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
   constructor(private readonly taskRepository: TaskRepository) {}
 
-  async execute(command: CreateTaskCommand): Promise<any> {
+  async execute(command: CreateTaskCommand) {
     const defaultCategoryColor = '#FF0000';
 
     const taskData = {
