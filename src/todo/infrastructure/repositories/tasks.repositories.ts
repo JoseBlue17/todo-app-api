@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
 import { Task, TaskDocument } from '../schemas/task.schema';
+import { FilterSearchTasksDto } from '../dto/filter-search-tasks.dto';
 
 @Injectable()
 export class TaskRepository {
@@ -15,6 +16,32 @@ export class TaskRepository {
     const userIdObjectId = new Types.ObjectId(userId);
 
     const tasks = await this.taskModel.find({ userId: userIdObjectId }).exec();
+    return tasks;
+  }
+
+  async searchTasks(
+    filters: FilterSearchTasksDto,
+    userId: string,
+  ): Promise<TaskDocument[]> {
+    const userIdObjectId = new Types.ObjectId(userId);
+    const query: any = { userId: userIdObjectId };
+
+    if (filters.title || filters.description) {
+      query.$or = [];
+
+      if (filters.title) {
+        query.$or.push({ title: { $regex: filters.title, $options: 'i' } });
+      }
+
+      if (filters.description) {
+        query.$or.push({
+          description: { $regex: filters.description, $options: 'i' },
+        });
+      }
+    }
+
+    const tasks = await this.taskModel.find(query).exec();
+
     return tasks;
   }
 

@@ -10,15 +10,13 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
 
   async execute(command: CreateTaskCommand): Promise<any> {
     const defaultCategoryColor = '#FF0000';
-    const dueDate: Date | null | undefined = command.dueDate;
-    const description: string | null | undefined = command.description;
 
     const taskData = {
       title: command.title,
-      description: description,
+      description: command.description ?? null,
       completed: false,
       category: command.category ?? defaultCategoryColor,
-      dueDate: dueDate,
+      dueDate: command.dueDate ?? null,
       userId: command.userId,
     };
 
