@@ -64,4 +64,30 @@ export class TaskRepository {
     const result = await createdTask.save();
     return result;
   }
+
+  async updateTask(taskData: {
+    title?: string;
+    description?: string | null;
+    completed?: boolean;
+    category?: string | null;
+    dueDate?: Date | null;
+    userId: string;
+    taskId: string;
+  }): Promise<TaskDocument> {
+    const taskIdObjectId = new Types.ObjectId(taskData.taskId);
+    const userIdObjectId = new Types.ObjectId(taskData.userId);
+
+    const updatedTask = await this.taskModel.findOneAndUpdate(
+      { _id: taskIdObjectId, userId: userIdObjectId },
+      {
+        title: taskData.title,
+        description: taskData.description,
+        completed: taskData.completed,
+        category: taskData.category,
+        dueDate: taskData.dueDate,
+      },
+      { new: true },
+    );
+    return updatedTask;
+  }
 }
