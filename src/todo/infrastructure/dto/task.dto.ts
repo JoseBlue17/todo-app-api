@@ -22,7 +22,6 @@ export class CreateTaskDto {
   completed?: boolean;
 
   @IsOptional()
-  @IsString()
   @IsHexColor()
   category?: string;
 
