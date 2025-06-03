@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Post, Body } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 
-import { CreateTaskDto } from '../infrastructure/dto/task.dto';
+import { CreateTaskDto } from '../infrastructure/dto/create-task.dto';
 
 import { GetUserTasksQuery } from '../application/get-tasks/get-user-tasks.query';
 import { CreateTaskCommand } from '../application/create-tasks/create-task.command';

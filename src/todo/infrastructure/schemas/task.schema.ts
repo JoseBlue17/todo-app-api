@@ -18,7 +18,12 @@ export class Task extends Document {
   @Prop()
   dueDate?: Date;
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'User',
+    required: true,
+    set: (val: string) => new Types.ObjectId(val),
+  })
   userId: Types.ObjectId;
 }
 
