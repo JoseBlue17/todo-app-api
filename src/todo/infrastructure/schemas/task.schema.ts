@@ -9,10 +9,10 @@ export class Task extends Document {
   @Prop()
   description?: string;
 
-  @Prop({ required: true })
+  @Prop()
   completed: boolean;
 
-  @Prop({ required: true })
+  @Prop()
   category: string;
 
   @Prop()

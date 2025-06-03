@@ -14,7 +14,7 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
     const taskData = {
       title: command.title,
       description: command.description ?? null,
-      completed: false,
+      completed: command.completed ?? false,
       category: command.category ?? defaultCategoryColor,
       dueDate: command.dueDate ?? null,
       userId: command.userId,

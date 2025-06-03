@@ -22,7 +22,7 @@ export class TaskRepository {
     title: string;
     description?: string | null;
     completed: boolean;
-    category?: string | null;
+    category: string;
     dueDate?: Date | null;
     userId: string;
   }): Promise<TaskDocument> {
