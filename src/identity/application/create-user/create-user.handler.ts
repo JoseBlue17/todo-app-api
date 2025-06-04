@@ -2,8 +2,10 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { DomainError } from 'src/shared/domain';
 import { HashService } from 'src/shared/hash';
+
 import { User } from 'src/identity/domain/user.model';
 import { UserRepository } from 'src/identity/infrastructure/repositories/user.repository';
+
 import { CreateUserCommand } from './create-user.command';
 
 @CommandHandler(CreateUserCommand)

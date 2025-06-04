@@ -1,11 +1,12 @@
 import { Language } from 'src/shared/enums';
+
 import { Address, UserDocument } from '../infrastructure/schemas/user.schema';
 
 type ExtendedUserDocument = UserDocument & {
   createdAt?: Date;
   updatedAt?: Date;
 };
-// type ExtendedUserParams = {};
+type ExtendedUserParams = object;
 
 export class User {
   readonly id: string;
@@ -45,7 +46,7 @@ export class User {
 
   static fromModel(
     document: ExtendedUserDocument,
-    // params: ExtendedUserParams = {},
+    params: ExtendedUserParams = {},
   ): User {
     return new User({
       id: String(document._id),
@@ -58,6 +59,7 @@ export class User {
       avatarUrl: document.profile.avatarUrl,
       createdAt: document.createdAt,
       updatedAt: document.updatedAt,
+      ...params,
     });
   }
 

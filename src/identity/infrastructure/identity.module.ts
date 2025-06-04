@@ -4,11 +4,11 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { CreateUserHandler } from '../application/create-user/create-user.handler';
-import { LoginHandler } from '../application/login/login.handler';
-
 import { HashService } from 'src/shared/hash';
 import { ClientRouteBuilder } from 'src/shared/utils';
+
+import { CreateUserHandler } from '../application/create-user/create-user.handler';
+import { LoginHandler } from '../application/login/login.handler';
 
 import { User, UserSchema } from './schemas/user.schema';
 import { UserRepository } from './repositories/user.repository';

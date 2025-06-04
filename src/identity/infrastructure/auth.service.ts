@@ -7,18 +7,15 @@ import {
 } from '@nestjs/common';
 
 import { HashService } from 'src/shared/hash';
+
 import { User } from '../domain/user.model';
+
 import { UserRepository } from './repositories/user.repository';
 import { UserDocument } from './schemas/user.schema';
 import { LoginDto } from './dto/login.dto';
 
 type ValidationOptions = {
   generateToken?: boolean;
-};
-
-export type LoginCredentials = {
-  email: string;
-  password: string;
 };
 
 @Injectable()

@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { GoogleRecaptchaModuleOptions } from '@nestlab/google-recaptcha/interfaces/google-recaptcha-module-options';
+
 import { ensureEnvVar } from './env-variable.utils';
 
 export default registerAs('recaptcha', (): GoogleRecaptchaModuleOptions => {

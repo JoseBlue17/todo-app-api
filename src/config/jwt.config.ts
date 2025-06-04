@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
+
 import { ensureEnvVar } from './env-variable.utils';
 
 export default registerAs(

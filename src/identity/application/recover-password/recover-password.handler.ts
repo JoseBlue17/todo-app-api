@@ -5,6 +5,7 @@ import { MailService } from 'src/shared/mail/mail.service';
 import { concatStrings } from 'src/shared/utils';
 
 import { UserRepository } from '../../infrastructure/repositories/user.repository';
+
 import { RecoverPasswordCommand } from './recover-password.command';
 import { RecoverPasswordEmail } from './recover-password.email';
 
