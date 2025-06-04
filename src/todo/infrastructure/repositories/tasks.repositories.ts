@@ -18,7 +18,14 @@ export class TaskRepository {
     return tasks;
   }
 
-  async createTask(taskData: {
+  async createTask({
+    title,
+    description,
+    completed,
+    category,
+    dueDate,
+    userId,
+  }: {
     title: string;
     description?: string | null;
     completed: boolean;
@@ -26,15 +33,27 @@ export class TaskRepository {
     dueDate?: Date | null;
     userId: string;
   }): Promise<TaskDocument> {
-    const createdTask = new this.taskModel({
-      title: taskData.title,
-      description: taskData.description,
-      completed: taskData.completed,
-      category: taskData.category,
-      dueDate: taskData.dueDate,
-      userId: new Types.ObjectId(taskData.userId),
-    });
-    const result = await createdTask.save();
-    return result;
+    if (!title?.trim()) {
+      throw new Error('Title is required and cannot be empty');
+    }
+
+    if (!Types.ObjectId.isValid(userId)) {
+      throw new Error('Invalid userId format');
+    }
+
+    try {
+      const createdTask = new this.taskModel({
+        title,
+        description,
+        completed,
+        category,
+        dueDate,
+        userId: new Types.ObjectId(userId),
+      });
+      const result = await createdTask.save();
+      return result;
+    } catch (error) {
+      throw new Error(`Failed to create task: ${error.message}`);
+    }
   }
 }
