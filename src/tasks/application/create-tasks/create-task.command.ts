@@ -1,6 +1,4 @@
-import { ICommand } from '@nestjs/cqrs';
-
-export class CreateTaskCommand implements ICommand {
+export class CreateTaskCommand {
   readonly title: string;
   readonly description?: string;
   readonly completed?: boolean;

@@ -8,7 +8,7 @@ import { AppModule } from 'src/app.module';
 import { TaskSeeder } from '../seed/task.seeder';
 import { UserSeeder } from '../seed/user.seeder';
 
-import { Task, TaskSchema } from 'src/todo/infrastructure/schemas/task.schema';
+import { Task, TaskSchema } from 'src/tasks/infrastructure/schemas/task.schema';
 import {
   User,
   UserSchema,
