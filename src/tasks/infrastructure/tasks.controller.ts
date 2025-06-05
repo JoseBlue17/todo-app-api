@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Post, Body, Query } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 
-import { CreateTaskDto } from '../infrastructure/dto/task.dto';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 import { GetUserTasksQuery } from '../application/get-tasks/get-user-tasks.query';
 import { CreateTaskCommand } from '../application/create-tasks/create-task.command';
@@ -27,14 +27,10 @@ export class TasksController {
 
   @Post('/')
   async createTask(@Body() createTaskDto: CreateTaskDto, @Req() req: any) {
-    const command = new CreateTaskCommand(
-      createTaskDto.title,
-      createTaskDto.description,
-      createTaskDto.completed,
-      createTaskDto.category,
-      createTaskDto.dueDate,
-      req.user.id,
-    );
+    const command = new CreateTaskCommand({
+      ...createTaskDto,
+      userId: req.user.id,
+    });
     return this.commandBus.execute(command);
   }
 }

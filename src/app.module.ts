@@ -18,7 +18,7 @@ import { ClientRouteBuilder } from './shared/utils';
 import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 import { MailModule } from './shared/mail';
 import { IdentityModule } from './identity/infrastructure/identity.module';
-import { TasksModule } from './todo/infrastructure/tasks.module';
+import { TasksModule } from './tasks/infrastructure/tasks.module';
 import { JwtStrategy } from './shared/strategies/jwt.strategy';
 @Module({
   imports: [
