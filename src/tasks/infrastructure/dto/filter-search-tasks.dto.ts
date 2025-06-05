@@ -1,4 +1,4 @@
-import { IsOptional } from 'class-validator';
+import { IsOptional, IsNumber, Min } from 'class-validator';
 
 export class FilterSearchTasksDto {
   @IsOptional()
@@ -6,4 +6,9 @@ export class FilterSearchTasksDto {
 
   @IsOptional()
   description?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  offset?: number;
 }

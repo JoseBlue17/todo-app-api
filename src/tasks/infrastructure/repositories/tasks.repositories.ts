@@ -40,7 +40,11 @@ export class TaskRepository {
       }
     }
 
-    const tasks = await this.taskModel.find(query).exec();
+    const tasks = await this.taskModel
+      .find(query)
+      .skip(filters.offset || 0)
+      .limit(10)
+      .exec();
 
     return tasks;
   }
