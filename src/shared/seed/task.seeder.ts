@@ -10,7 +10,7 @@ import {
 import {
   Task,
   TaskDocument,
-} from '../../todo/infrastructure/schemas/task.schema';
+} from '../../tasks/infrastructure/schemas/task.schema';
 
 @Injectable()
 export class TaskSeeder {

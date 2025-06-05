@@ -23,10 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     this.validateExpiration(payload.exp);
 
     const user = await this.userRepository.findById(payload.userId);
-    return User.fromModel(user, {
-      orgId: payload.orgId,
-      branchId: payload.branchId || undefined,
-    });
+    return User.fromModel(user);
   }
 
   private validateExpiration(expirationDate: number) {

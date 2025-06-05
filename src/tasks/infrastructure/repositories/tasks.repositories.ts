@@ -40,26 +40,45 @@ export class TaskRepository {
       }
     }
 
-    const tasks = await this.taskModel.find(query).exec();
+    const tasks = await this.taskModel
+      .find(query)
+      .skip(filters.offset || 0)
+      .limit(10)
+      .exec();
 
     return tasks;
   }
 
-  async createTask(taskData: {
+  async createTask({
+    title,
+    description,
+    completed,
+    category,
+    dueDate,
+    userId,
+  }: {
     title: string;
     description?: string | null;
     completed: boolean;
-    category?: string | null;
+    category: string;
     dueDate?: Date | null;
     userId: string;
-  }): Promise<TaskDocument> {
+  }) {
+    if (!title?.trim()) {
+      throw new Error('Title is required and cannot be empty');
+    }
+
+    if (!Types.ObjectId.isValid(userId)) {
+      throw new Error('Invalid userId format');
+    }
+
     const createdTask = new this.taskModel({
-      title: taskData.title,
-      description: taskData.description,
-      completed: taskData.completed,
-      category: taskData.category,
-      dueDate: taskData.dueDate,
-      userId: new Types.ObjectId(taskData.userId),
+      title,
+      description,
+      completed,
+      category,
+      dueDate,
+      userId: new Types.ObjectId(userId),
     });
     const result = await createdTask.save();
     return result;

@@ -4,25 +4,24 @@ import {
   IsBoolean,
   IsHexColor,
   IsDate,
+  IsNotEmpty,
 } from 'class-validator';
-import { Type, Transform } from 'class-transformer';
+import { Type } from 'class-transformer';
 
-export class UpdateTaskDto {
-  @IsOptional()
+export class CreateTaskDto {
   @IsString()
-  title?: string;
+  @IsNotEmpty()
+  title: string;
 
   @IsOptional()
   @IsString()
   description?: string;
 
   @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   completed?: boolean;
 
   @IsOptional()
-  @IsString()
   @IsHexColor()
   category?: string;
 
