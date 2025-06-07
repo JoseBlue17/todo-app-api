@@ -20,6 +20,8 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
       userId: command.userId,
     };
 
-    return this.taskRepository.createTask(taskData);
+    const createdTask = await this.taskRepository.createTask(taskData);
+
+    return createdTask;
   }
 }

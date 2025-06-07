@@ -4,12 +4,6 @@ import { Model, Types } from 'mongoose';
 
 import { Task, TaskDocument } from '../schemas/task.schema';
 
-interface GetTasksFilters {
-  title?: string;
-  description?: string;
-  cursor?: string;
-}
-
 interface CreateTaskPayload {
   title: string;
   description?: string | null;
@@ -26,33 +20,8 @@ export class TaskRepository {
     private readonly taskModel: Model<TaskDocument>,
   ) {}
 
-  async getTasks(userId: string, filters?: GetTasksFilters) {
-    const userIdObjectId = new Types.ObjectId(userId);
-    const query: any = { userId: userIdObjectId };
-
-    if (filters?.cursor) {
-      query._id = { $gt: new Types.ObjectId(filters.cursor) };
-    }
-
-    const orConditions = [];
-
-    if (filters?.title) {
-      orConditions.push({ title: { $regex: filters.title, $options: 'i' } });
-    }
-
-    if (filters?.description) {
-      orConditions.push({
-        description: { $regex: filters.description, $options: 'i' },
-      });
-    }
-
-    if (orConditions.length > 0) {
-      query.$or = orConditions;
-    }
-
-    const tasks = this.taskModel.find(query).sort({ _id: 1 }).exec();
-
-    return tasks;
+  async findByUserId(userId: string) {
+    return this.taskModel.find({ userId: new Types.ObjectId(userId) }).exec();
   }
 
   async createTask(data: CreateTaskPayload) {
@@ -73,7 +42,6 @@ export class TaskRepository {
       userId: new Types.ObjectId(data.userId),
     });
 
-    const result = await createdTask.save();
-    return result;
+    return createdTask.save();
   }
 }
