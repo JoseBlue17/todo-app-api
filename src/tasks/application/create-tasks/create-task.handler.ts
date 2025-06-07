@@ -1,5 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
+import { ALLOWED_COLORS } from 'src/shared/utils/common-colors';
+
 import { TaskRepository } from '../../infrastructure/repositories/tasks.repositories';
 
 import { CreateTaskCommand } from './create-task.command';
@@ -9,7 +11,7 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
   constructor(private readonly taskRepository: TaskRepository) {}
 
   async execute(command: CreateTaskCommand) {
-    const defaultCategoryColor = '#FF0000';
+    const defaultCategoryColor = ALLOWED_COLORS[0];
 
     const taskData = {
       title: command.title,

@@ -24,3 +24,14 @@ export const colors = {
   red500: '#e30613',
   black: '#000',
 };
+
+export const ALLOWED_COLORS = [
+  '#FF0000', // Rojo
+  '#00FF00', // Verde
+  '#0000FF', // Azul
+  '#FFFF00', // Amarillo
+  '#FFA500', // Naranja
+  '#800080', // Púrpura
+  '#000000', // Negro
+  '#FFFFFF', // Blanco
+];
