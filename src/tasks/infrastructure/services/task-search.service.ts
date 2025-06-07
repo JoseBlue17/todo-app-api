@@ -12,7 +12,7 @@ export type SearchTaskFilters = {
 };
 
 @Injectable()
-export class TaskIndexerService {
+export class TaskSearchService {
   constructor(
     @InjectModel(Task.name)
     private readonly taskModel: Model<TaskDocument>,
@@ -34,7 +34,7 @@ export class TaskIndexerService {
 
     const tasks = await this.taskModel
       .find(query)
-      .limit(filters.size || 10)
+      .limit(filters.size)
       .sort({ createdAt: -1 })
       .exec();
 

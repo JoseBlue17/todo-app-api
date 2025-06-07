@@ -5,10 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CreateTaskHandler } from '../application/create-tasks/create-task.handler';
 import { GetTasksHandler } from '../application/get-tasks/get-tasks.handler';
 
-import { TasksController } from './tasks.controller';
-import { Task, TaskSchema } from './schemas/task.schema';
 import { TaskRepository } from './repositories/tasks.repositories';
-import { TaskIndexerService } from './services/task-indexer.service';
+import { Task, TaskSchema } from './schemas/task.schema';
+import { TaskSearchService } from './services/task-search.service';
+import { TasksController } from './tasks.controller';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { TaskIndexerService } from './services/task-indexer.service';
     CreateTaskHandler,
     GetTasksHandler,
     TaskRepository,
-    TaskIndexerService,
+    TaskSearchService,
   ],
 })
 export class TasksModule {}
