@@ -10,7 +10,7 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
 
   async execute(command: CreateTaskCommand) {
     const defaultCategoryColor = '#FF0000';
-    
+
     const taskData = {
       title: command.title,
       description: command.description ?? null,

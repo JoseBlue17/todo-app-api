@@ -9,6 +9,14 @@ export class GetTasksHandler implements IQueryHandler<GetTasksQuery> {
   constructor(private readonly taskRepository: TaskRepository) {}
 
   async execute(query: GetTasksQuery) {
-    return this.taskRepository.getTasks(query.userId, query.filters);
+    const tasks = await this.taskRepository.getTasks(
+      query.userId,
+      query.filters,
+    );
+
+    const cursor =
+      tasks.length > 0 ? tasks[tasks.length - 1]._id.toString() : undefined;
+
+    return { data: tasks, cursor };
   }
 }
