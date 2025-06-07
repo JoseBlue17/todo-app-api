@@ -2,11 +2,10 @@ import { Controller, Get, Req, Post, Body, Query } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTasksDto } from './dto/get-tasks.dto';
 
-import { GetUserTasksQuery } from '../application/get-tasks/get-user-tasks.query';
+import { GetTasksQuery } from '../application/get-tasks/get-tasks.query';
 import { CreateTaskCommand } from '../application/create-tasks/create-task.command';
-import { SearchTasksQuery } from '../application/search-tasks/search-tasks.query';
-import { FilterSearchTasksDto } from './dto/filter-search-tasks.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -16,13 +15,8 @@ export class TasksController {
   ) {}
 
   @Get('/')
-  async getUserTasks(@Req() req: any) {
-    return this.queryBus.execute(new GetUserTasksQuery(req.user.id));
-  }
-
-  @Get('/search')
-  async searchTasks(@Query() query: FilterSearchTasksDto, @Req() req: any) {
-    return this.queryBus.execute(new SearchTasksQuery(query, req.user.id));
+  async getTasks(@Query() filters: GetTasksDto, @Req() req: any) {
+    return this.queryBus.execute(new GetTasksQuery(req.user.id, filters));
   }
 
   @Post('/')
