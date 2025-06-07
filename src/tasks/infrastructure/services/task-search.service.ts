@@ -35,7 +35,7 @@ export class TaskSearchService {
     const tasks = await this.taskModel
       .find(query)
       .limit(filters.size)
-      .sort({ createdAt: -1 })
+      .sort({ _id: 1 })
       .exec();
 
     return {
