@@ -9,6 +9,7 @@ import { TaskRepository } from './repositories/tasks.repositories';
 import { Task, TaskSchema } from './schemas/task.schema';
 import { TaskSearchService } from './services/task-search.service';
 import { TasksController } from './tasks.controller';
+import { UpdateTaskHandler } from '../application/update-tasks/update-tasks.handler';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TasksController } from './tasks.controller';
     GetTasksHandler,
     TaskRepository,
     TaskSearchService,
+    UpdateTaskHandler,
   ],
 })
 export class TasksModule {}
