@@ -26,12 +26,18 @@ export const colors = {
 };
 
 export const ALLOWED_COLORS = [
-  '#FF0000',
-  '#00FF00',
-  '#0000FF',
-  '#FFFF00',
-  '#FFA500',
-  '#800080',
-  '#000000',
-  '#FFFFFF',
+  '#FF0202',
+  '#E81E63',
+  '#9B27AF',
+  '#673AB6',
+  '#3F51B4',
+  '#2195F2',
+  '#00BBD3',
+  '#009587',
+  '#4CAE50',
+  '#8AC24A',
+  '#CCDB39',
+  '#FEEA3B',
+  '#795548',
+  '#9D9D9D',
 ];
