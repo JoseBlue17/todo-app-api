@@ -1,0 +1,21 @@
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
+import { TaskSearchService } from '../../infrastructure/services/task-search.service';
+
+import { GetTasksQuery } from './get-tasks.query';
+
+const PAGE_SIZE = 10;
+
+@QueryHandler(GetTasksQuery)
+export class GetTasksHandler implements IQueryHandler<GetTasksQuery> {
+  constructor(private readonly taskSearchService: TaskSearchService) {}
+
+  async execute(query: GetTasksQuery) {
+    return this.taskSearchService.searchTasks({
+      userId: query.userId,
+      terms: query.filters?.terms,
+      cursor: query.filters?.cursor,
+      size: query.filters?.size || PAGE_SIZE,
+    });
+  }
+}

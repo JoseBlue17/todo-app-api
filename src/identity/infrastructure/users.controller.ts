@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Recaptcha } from '@nestlab/google-recaptcha';
 
@@ -9,6 +9,7 @@ import { LoginQuery } from '../application/login/login.query';
 
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { User } from '../domain/user.model';
 
 @Controller('users')
 export class UsersController {
@@ -28,5 +29,10 @@ export class UsersController {
   @Public()
   async login(@Body() body: LoginDto) {
     return this.queryBus.execute(new LoginQuery(body));
+  }
+
+  @Get('/me')
+  async me(@Req() req: { user: User }) {
+    return req.user.getUserInfo();
   }
 }
