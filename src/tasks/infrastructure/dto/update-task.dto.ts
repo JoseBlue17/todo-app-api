@@ -4,8 +4,10 @@ import {
   IsBoolean,
   IsHexColor,
   IsDate,
+  IsIn,
 } from 'class-validator';
-import { Type, Transform } from 'class-transformer';
+import { Type } from 'class-transformer';
+import { ALLOWED_COLORS } from 'src/shared/utils/common-colors';
 
 export class UpdateTaskDto {
   @IsOptional()
@@ -17,13 +19,16 @@ export class UpdateTaskDto {
   description?: string;
 
   @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   completed?: boolean;
 
   @IsOptional()
-  @IsString()
   @IsHexColor()
+  @IsIn(ALLOWED_COLORS, {
+    message: `Category color must be one of the allowed values: ${ALLOWED_COLORS.join(
+      ', ',
+    )}`,
+  })
   category?: string;
 
   @IsOptional()

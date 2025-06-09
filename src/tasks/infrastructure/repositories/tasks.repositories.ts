@@ -13,6 +13,16 @@ interface CreateTaskPayload {
   userId: string;
 }
 
+interface UpdateTaskPayload {
+  title?: string;
+  description?: string | null;
+  completed?: boolean;
+  category?: string | null;
+  dueDate?: Date | null;
+  userId: string;
+  taskId: string;
+}
+
 @Injectable()
 export class TaskRepository {
   constructor(
@@ -45,15 +55,7 @@ export class TaskRepository {
     return createdTask.save();
   }
 
-  async updateTask(taskData: {
-    title?: string;
-    description?: string | null;
-    completed?: boolean;
-    category?: string | null;
-    dueDate?: Date | null;
-    userId: string;
-    taskId: string;
-  }): Promise<TaskDocument> {
+  async updateTask(taskData: UpdateTaskPayload) {
     const taskIdObjectId = new Types.ObjectId(taskData.taskId);
     const userIdObjectId = new Types.ObjectId(taskData.userId);
 

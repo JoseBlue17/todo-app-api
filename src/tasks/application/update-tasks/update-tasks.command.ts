@@ -1,13 +1,13 @@
-import { ICommand } from '@nestjs/cqrs';
+export class UpdateTaskCommand {
+  readonly userId: string;
+  readonly taskId: string;
+  readonly title?: string;
+  readonly description?: string | null;
+  readonly completed?: boolean | null;
+  readonly category?: string | null;
+  readonly dueDate?: Date | null;
 
-export class UpdateTaskCommand implements ICommand {
-  constructor(
-    public readonly title: string,
-    public readonly description: string | null,
-    public readonly completed: boolean | null,
-    public readonly category: string | null,
-    public readonly dueDate: Date | null,
-    public readonly userId: string,
-    public readonly taskId: string,
-  ) {}
+  constructor(params: UpdateTaskCommand) {
+    Object.assign(this, params);
+  }
 }
