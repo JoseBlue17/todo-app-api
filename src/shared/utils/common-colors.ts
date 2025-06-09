@@ -26,12 +26,12 @@ export const colors = {
 };
 
 export const ALLOWED_COLORS = [
-  '#FF0000', // Rojo
-  '#00FF00', // Verde
-  '#0000FF', // Azul
-  '#FFFF00', // Amarillo
-  '#FFA500', // Naranja
-  '#800080', // Púrpura
-  '#000000', // Negro
-  '#FFFFFF', // Blanco
+  '#FF0000',
+  '#00FF00',
+  '#0000FF',
+  '#FFFF00',
+  '#FFA500',
+  '#800080',
+  '#000000',
+  '#FFFFFF',
 ];
