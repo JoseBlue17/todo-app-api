@@ -4,8 +4,8 @@ import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksDto } from './dto/get-tasks.dto';
 
-import { GetTasksQuery } from '../application/get-tasks/get-tasks.query';
 import { CreateTaskCommand } from '../application/create-tasks/create-task.command';
+import { GetTasksQuery } from '../application/get-tasks/get-tasks.query';
 
 @Controller('tasks')
 export class TasksController {

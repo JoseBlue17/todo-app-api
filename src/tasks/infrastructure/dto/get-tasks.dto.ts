@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsString, IsOptional, IsNumber, Min, Max } from 'class-validator';
+
 import { IsObjectId } from 'src/shared/validation';
 
 export class GetTasksDto {
