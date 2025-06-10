@@ -5,8 +5,10 @@ import {
   IsHexColor,
   IsDate,
   IsNotEmpty,
+  IsIn,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ALLOWED_COLORS } from 'src/shared/utils/common-colors';
 
 export class CreateTaskDto {
   @IsString()
@@ -23,6 +25,11 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsHexColor()
+  @IsIn(ALLOWED_COLORS, {
+    message: `Category color must be one of the allowed values: ${ALLOWED_COLORS.join(
+      ', ',
+    )}`,
+  })
   category?: string;
 
   @IsOptional()

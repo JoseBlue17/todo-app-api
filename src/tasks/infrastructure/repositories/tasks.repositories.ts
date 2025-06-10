@@ -4,6 +4,15 @@ import { Model, Types } from 'mongoose';
 
 import { Task, TaskDocument } from '../schemas/task.schema';
 
+interface CreateTaskPayload {
+  title: string;
+  description?: string | null;
+  completed: boolean;
+  category: string;
+  dueDate?: Date | null;
+  userId: string;
+}
+
 @Injectable()
 export class TaskRepository {
   constructor(
@@ -11,45 +20,28 @@ export class TaskRepository {
     private readonly taskModel: Model<TaskDocument>,
   ) {}
 
-  async findByUserId(userId: string): Promise<TaskDocument[]> {
-    const userIdObjectId = new Types.ObjectId(userId);
-
-    const tasks = await this.taskModel.find({ userId: userIdObjectId }).exec();
-    return tasks;
+  async findByUserId(userId: string) {
+    return this.taskModel.find({ userId: new Types.ObjectId(userId) }).exec();
   }
 
-  async createTask({
-    title,
-    description,
-    completed,
-    category,
-    dueDate,
-    userId,
-  }: {
-    title: string;
-    description?: string | null;
-    completed: boolean;
-    category: string;
-    dueDate?: Date | null;
-    userId: string;
-  }) {
-    if (!title?.trim()) {
+  async createTask(data: CreateTaskPayload) {
+    if (!data.title?.trim()) {
       throw new Error('Title is required and cannot be empty');
     }
 
-    if (!Types.ObjectId.isValid(userId)) {
+    if (!Types.ObjectId.isValid(data.userId)) {
       throw new Error('Invalid userId format');
     }
 
     const createdTask = new this.taskModel({
-      title,
-      description,
-      completed,
-      category,
-      dueDate,
-      userId: new Types.ObjectId(userId),
+      title: data.title,
+      description: data.description,
+      completed: data.completed,
+      category: data.category,
+      dueDate: data.dueDate,
+      userId: new Types.ObjectId(data.userId),
     });
-    const result = await createdTask.save();
-    return result;
+
+    return createdTask.save();
   }
 }

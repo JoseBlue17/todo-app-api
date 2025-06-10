@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { GetUserTasksHandler } from '../application/get-tasks/get-user-tasks.handler';
 import { CreateTaskHandler } from '../application/create-tasks/create-task.handler';
+import { GetTasksHandler } from '../application/get-tasks/get-tasks.handler';
 
-import { TasksController } from './tasks.controller';
-import { Task, TaskSchema } from './schemas/task.schema';
 import { TaskRepository } from './repositories/tasks.repositories';
+import { Task, TaskSchema } from './schemas/task.schema';
+import { TaskSearchService } from './services/task-search.service';
+import { TasksController } from './tasks.controller';
 
 @Module({
   imports: [
@@ -15,6 +16,11 @@ import { TaskRepository } from './repositories/tasks.repositories';
     MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }]),
   ],
   controllers: [TasksController],
-  providers: [GetUserTasksHandler, CreateTaskHandler, TaskRepository],
+  providers: [
+    CreateTaskHandler,
+    GetTasksHandler,
+    TaskRepository,
+    TaskSearchService,
+  ],
 })
 export class TasksModule {}
