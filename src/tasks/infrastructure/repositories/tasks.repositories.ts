@@ -2,25 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
-import { Task, TaskDocument } from '../schemas/task.schema';
+import { Task, TaskDocument, ITask } from '../schemas/task.schema';
 
-type CreateTaskPayload = {
-  title: string;
-  description?: string | null;
-  completed?: boolean;
-  category?: string | null;
-  dueDate?: Date | null;
-  userId: string;
-};
+type CreateTaskPayload = Omit<ITask, 'userId'> & { userId: string };
 
 type UpdateTaskPayload = {
+  taskId: string;
+  userId: string;
   title?: string;
   description?: string | null;
   completed?: boolean;
   category?: string | null;
   dueDate?: Date | null;
-  userId: string;
-  taskId: string;
 };
 
 type SearchTaskFilters = {
@@ -42,30 +35,22 @@ export class TaskRepository {
   }
 
   async createTask(data: CreateTaskPayload) {
-    const createdTask = new this.taskModel({
-      title: data.title,
-      description: data.description,
-      completed: data.completed,
-      category: data.category,
-      dueDate: data.dueDate,
+    return this.taskModel.create({
+      ...data,
       userId: new Types.ObjectId(data.userId),
     });
-
-    return createdTask.save();
   }
 
   async updateTask(taskData: UpdateTaskPayload) {
+    const { taskId, userId, ...updateFields } = taskData;
+
     const updatedTask = await this.taskModel.findOneAndUpdate(
       {
-        _id: new Types.ObjectId(taskData.taskId),
-        userId: new Types.ObjectId(taskData.userId),
+        _id: new Types.ObjectId(taskId),
+        userId: new Types.ObjectId(userId),
       },
       {
-        title: taskData.title,
-        description: taskData.description,
-        completed: taskData.completed,
-        category: taskData.category,
-        dueDate: taskData.dueDate,
+        ...updateFields,
       },
       { new: true },
     );
