@@ -4,16 +4,16 @@ import { Model, Types } from 'mongoose';
 
 import { Task, TaskDocument } from '../schemas/task.schema';
 
-interface CreateTaskPayload {
+type CreateTaskPayload = {
   title: string;
   description?: string | null;
-  completed: boolean;
-  category: string;
+  completed?: boolean;
+  category?: string | null;
   dueDate?: Date | null;
   userId: string;
-}
+};
 
-interface UpdateTaskPayload {
+type UpdateTaskPayload = {
   title?: string;
   description?: string | null;
   completed?: boolean;
@@ -21,7 +21,14 @@ interface UpdateTaskPayload {
   dueDate?: Date | null;
   userId: string;
   taskId: string;
-}
+};
+
+type SearchTaskFilters = {
+  userId: string;
+  terms?: string;
+  cursor?: string;
+  size?: number;
+};
 
 @Injectable()
 export class TaskRepository {
@@ -35,14 +42,6 @@ export class TaskRepository {
   }
 
   async createTask(data: CreateTaskPayload) {
-    if (!data.title?.trim()) {
-      throw new Error('Title is required and cannot be empty');
-    }
-
-    if (!Types.ObjectId.isValid(data.userId)) {
-      throw new Error('Invalid userId format');
-    }
-
     const createdTask = new this.taskModel({
       title: data.title,
       description: data.description,
@@ -56,11 +55,11 @@ export class TaskRepository {
   }
 
   async updateTask(taskData: UpdateTaskPayload) {
-    const taskIdObjectId = new Types.ObjectId(taskData.taskId);
-    const userIdObjectId = new Types.ObjectId(taskData.userId);
-
     const updatedTask = await this.taskModel.findOneAndUpdate(
-      { _id: taskIdObjectId, userId: userIdObjectId },
+      {
+        _id: new Types.ObjectId(taskData.taskId),
+        userId: new Types.ObjectId(taskData.userId),
+      },
       {
         title: taskData.title,
         description: taskData.description,
@@ -71,5 +70,31 @@ export class TaskRepository {
       { new: true },
     );
     return updatedTask;
+  }
+
+  async searchTasks(filters: SearchTaskFilters) {
+    let query = this.taskModel.find({
+      userId: new Types.ObjectId(filters.userId),
+    });
+
+    if (filters.terms) {
+      query = query.merge({
+        $or: [
+          { title: { $regex: filters.terms, $options: 'i' } },
+          { description: { $regex: filters.terms, $options: 'i' } },
+        ],
+      });
+    }
+
+    if (filters.cursor) {
+      query = query.merge({ _id: { $gt: new Types.ObjectId(filters.cursor) } });
+    }
+
+    const tasks = await query.limit(filters.size).sort({ _id: 1 }).exec();
+
+    return {
+      tasks,
+      cursor: tasks.length > 0 ? tasks[tasks.length - 1]._id : undefined,
+    };
   }
 }

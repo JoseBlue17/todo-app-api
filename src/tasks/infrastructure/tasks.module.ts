@@ -8,7 +8,6 @@ import { UpdateTaskHandler } from '../application/update-tasks/update-tasks.hand
 
 import { TaskRepository } from './repositories/tasks.repositories';
 import { Task, TaskSchema } from './schemas/task.schema';
-import { TaskSearchService } from './services/task-search.service';
 import { TasksController } from './tasks.controller';
 
 @Module({
@@ -21,7 +20,6 @@ import { TasksController } from './tasks.controller';
     CreateTaskHandler,
     GetTasksHandler,
     TaskRepository,
-    TaskSearchService,
     UpdateTaskHandler,
   ],
 })
