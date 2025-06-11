@@ -1,18 +1,11 @@
+// task.schema.ts - VERSIÓN OPTIMIZADA
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+
 import { ALLOWED_COLORS } from 'src/shared/utils/common-colors';
 
-export type ITask = {
-  title: string;
-  description?: string | null;
-  completed: boolean;
-  category: string;
-  dueDate?: Date | null;
-  userId: Types.ObjectId;
-};
-
 @Schema({ timestamps: true })
-export class Task extends Document implements ITask {
+export class Task extends Document {
   @Prop({ required: true })
   title: string;
 
@@ -29,7 +22,6 @@ export class Task extends Document implements ITask {
   dueDate?: Date | null;
 
   @Prop({
-    ref: 'User',
     required: true,
     set: (val: string) => new Types.ObjectId(val),
   })

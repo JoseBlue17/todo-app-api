@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
-import { Task, TaskDocument, ITask } from '../schemas/task.schema';
+import { Task, TaskDocument } from '../schemas/task.schema';
 
-type CreateTaskPayload = Omit<ITask, 'userId'> & { userId: string };
+type TTask = Omit<Task, 'userId'> & { userId: string };
 
 type UpdateTaskPayload = {
   taskId: string;
@@ -16,12 +16,14 @@ type UpdateTaskPayload = {
   dueDate?: Date | null;
 };
 
-type SearchTaskFilters = {
+type TaskFilters = {
   userId: string;
   terms?: string;
   cursor?: string;
   size?: number;
 };
+
+type TaskSelect = { [key in keyof TaskDocument]?: boolean };
 
 @Injectable()
 export class TaskRepository {
@@ -34,11 +36,8 @@ export class TaskRepository {
     return this.taskModel.find({ userId: new Types.ObjectId(userId) }).exec();
   }
 
-  async createTask(data: CreateTaskPayload) {
-    return this.taskModel.create({
-      ...data,
-      userId: new Types.ObjectId(data.userId),
-    });
+  async createTask(data: TTask) {
+    return this.taskModel.create(data);
   }
 
   async updateTask(taskData: UpdateTaskPayload) {
@@ -57,7 +56,7 @@ export class TaskRepository {
     return updatedTask;
   }
 
-  async searchTasks(filters: SearchTaskFilters) {
+  async searchTasks(filters: TaskFilters, select?: TaskSelect) {
     let query = this.taskModel.find({
       userId: new Types.ObjectId(filters.userId),
     });
@@ -75,7 +74,11 @@ export class TaskRepository {
       query = query.merge({ _id: { $gt: new Types.ObjectId(filters.cursor) } });
     }
 
-    const tasks = await query.limit(filters.size).sort({ _id: 1 }).exec();
+    if (filters.size) {
+      query = query.limit(filters.size);
+    }
+
+    const tasks = await query.select(select).sort({ _id: 1 }).exec();
 
     return {
       tasks,
