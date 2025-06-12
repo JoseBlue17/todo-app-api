@@ -4,16 +4,23 @@ import { Model, Types } from 'mongoose';
 
 import { Task, TaskDocument } from '../schemas/task.schema';
 
-type TTask = Omit<Task, 'userId'> & { userId: string };
+type CreateTaskData = {
+  title: string;
+  description?: string;
+  completed: boolean;
+  category: string;
+  dueDate?: Date;
+  userId: string;
+};
 
 type UpdateTaskPayload = {
   taskId: string;
   userId: string;
   title?: string;
-  description?: string | null;
+  description?: string;
   completed?: boolean;
-  category?: string | null;
-  dueDate?: Date | null;
+  category?: string;
+  dueDate?: Date;
 };
 
 type TaskFilters = {
@@ -36,7 +43,7 @@ export class TaskRepository {
     return this.taskModel.find({ userId: new Types.ObjectId(userId) }).exec();
   }
 
-  async createTask(data: TTask) {
+  async createTask(data: CreateTaskData) {
     return this.taskModel.create(data);
   }
 
@@ -57,12 +64,12 @@ export class TaskRepository {
   }
 
   async searchTasks(filters: TaskFilters, select?: TaskSelect) {
-    let query = this.taskModel.find({
+    const query = this.taskModel.find({
       userId: new Types.ObjectId(filters.userId),
     });
 
     if (filters.terms) {
-      query = query.merge({
+      query.merge({
         $or: [
           { title: { $regex: filters.terms, $options: 'i' } },
           { description: { $regex: filters.terms, $options: 'i' } },
@@ -71,11 +78,11 @@ export class TaskRepository {
     }
 
     if (filters.cursor) {
-      query = query.merge({ _id: { $gt: new Types.ObjectId(filters.cursor) } });
+      query.merge({ _id: { $gt: new Types.ObjectId(filters.cursor) } });
     }
 
     if (filters.size) {
-      query = query.limit(filters.size);
+      query.limit(filters.size);
     }
 
     const tasks = await query.select(select).sort({ _id: 1 }).exec();

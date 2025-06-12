@@ -1,4 +1,3 @@
-// task.schema.ts - VERSIÓN OPTIMIZADA
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
@@ -9,8 +8,8 @@ export class Task extends Document {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ default: null })
-  description?: string | null;
+  @Prop()
+  description?: string;
 
   @Prop({ default: false })
   completed: boolean;
@@ -18,8 +17,8 @@ export class Task extends Document {
   @Prop({ default: ALLOWED_COLORS[0] })
   category: string;
 
-  @Prop({ default: null })
-  dueDate?: Date | null;
+  @Prop()
+  dueDate?: Date;
 
   @Prop({
     required: true,
