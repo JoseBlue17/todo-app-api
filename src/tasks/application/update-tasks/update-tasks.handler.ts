@@ -10,13 +10,7 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand> {
 
   async execute(command: UpdateTaskCommand) {
     const updatedTask = await this.taskRepository.updateTask({
-      taskId: command.taskId,
-      userId: command.userId,
-      title: command.title,
-      description: command.description,
-      completed: command.completed,
-      category: command.category,
-      dueDate: command.dueDate,
+      ...command,
     });
 
     if (!updatedTask) {

@@ -42,11 +42,11 @@ export class TasksController {
   @Patch('/:id')
   async updateTask(
     @Param('id') id: string,
-    @Body() updateTaskDto: UpdateTaskDto,
+    @Body() body: UpdateTaskDto,
     @Req() req: any,
   ) {
     const command = new UpdateTaskCommand({
-      ...updateTaskDto,
+      ...body,
       userId: req.user.id,
       taskId: id,
     });
