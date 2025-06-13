@@ -11,19 +11,13 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
   constructor(private readonly taskRepository: TaskRepository) {}
 
   async execute(command: CreateTaskCommand) {
-    const defaultCategoryColor = ALLOWED_COLORS[0];
-
     const taskData = {
-      title: command.title,
-      description: command.description ?? null,
+      ...command,
       completed: command.completed ?? false,
-      category: command.category ?? defaultCategoryColor,
-      dueDate: command.dueDate ?? null,
-      userId: command.userId,
+      category: command.category ?? ALLOWED_COLORS[0],
     };
 
     const createdTask = await this.taskRepository.createTask(taskData);
-
     return createdTask;
   }
 }

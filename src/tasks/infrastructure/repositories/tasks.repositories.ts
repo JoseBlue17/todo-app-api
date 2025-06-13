@@ -4,14 +4,33 @@ import { Model, Types } from 'mongoose';
 
 import { Task, TaskDocument } from '../schemas/task.schema';
 
-interface CreateTaskPayload {
+type CreateTaskData = {
   title: string;
-  description?: string | null;
+  description?: string;
   completed: boolean;
   category: string;
-  dueDate?: Date | null;
+  dueDate?: Date;
   userId: string;
-}
+};
+
+type UpdateTaskPayload = {
+  taskId: string;
+  userId: string;
+  title?: string;
+  description?: string;
+  completed?: boolean;
+  category?: string;
+  dueDate?: Date;
+};
+
+type TaskFilters = {
+  userId: string;
+  terms?: string;
+  cursor?: string;
+  size?: number;
+};
+
+type TaskSelect = { [key in keyof TaskDocument]?: boolean };
 
 @Injectable()
 export class TaskRepository {
@@ -24,24 +43,56 @@ export class TaskRepository {
     return this.taskModel.find({ userId: new Types.ObjectId(userId) }).exec();
   }
 
-  async createTask(data: CreateTaskPayload) {
-    if (!data.title?.trim()) {
-      throw new Error('Title is required and cannot be empty');
-    }
+  async createTask(data: CreateTaskData) {
+    return this.taskModel.create(data);
+  }
 
-    if (!Types.ObjectId.isValid(data.userId)) {
-      throw new Error('Invalid userId format');
-    }
+  async updateTask(taskData: UpdateTaskPayload) {
+    const { taskId, userId, ...updateFields } = taskData;
 
-    const createdTask = new this.taskModel({
-      title: data.title,
-      description: data.description,
-      completed: data.completed,
-      category: data.category,
-      dueDate: data.dueDate,
-      userId: new Types.ObjectId(data.userId),
+    const updatedTask = await this.taskModel.findOneAndUpdate(
+      {
+        _id: new Types.ObjectId(taskId),
+        userId: new Types.ObjectId(userId),
+      },
+      {
+        ...updateFields,
+      },
+      { new: true },
+    );
+    if (!updatedTask) {
+      throw new Error('Task not found');
+    }
+    return updatedTask;
+  }
+
+  async searchTasks(filters: TaskFilters, select?: TaskSelect) {
+    const query = this.taskModel.find({
+      userId: new Types.ObjectId(filters.userId),
     });
 
-    return createdTask.save();
+    if (filters.terms) {
+      query.merge({
+        $or: [
+          { title: { $regex: filters.terms, $options: 'i' } },
+          { description: { $regex: filters.terms, $options: 'i' } },
+        ],
+      });
+    }
+
+    if (filters.cursor) {
+      query.merge({ _id: { $gt: new Types.ObjectId(filters.cursor) } });
+    }
+
+    if (filters.size) {
+      query.limit(filters.size);
+    }
+
+    const tasks = await query.select(select).sort({ _id: 1 }).exec();
+
+    return {
+      tasks,
+      cursor: tasks.length > 0 ? tasks[tasks.length - 1]._id : undefined,
+    };
   }
 }
