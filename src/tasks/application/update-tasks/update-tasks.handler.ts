@@ -13,10 +13,6 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand> {
       ...command,
     });
 
-    if (!updatedTask) {
-      throw new Error('Task not found');
-    }
-
     return updatedTask;
   }
 }

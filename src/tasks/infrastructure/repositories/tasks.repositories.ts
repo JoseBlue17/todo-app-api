@@ -60,6 +60,9 @@ export class TaskRepository {
       },
       { new: true },
     );
+    if (!updatedTask) {
+      throw new Error('Task not found');
+    }
     return updatedTask;
   }
 
