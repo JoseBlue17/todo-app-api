@@ -1,6 +1,7 @@
 import { Body, Controller, Post, Get, Req } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Recaptcha } from '@nestlab/google-recaptcha';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { Public } from 'src/shared/validation';
 
@@ -32,6 +33,7 @@ export class UsersController {
   }
 
   @Get('/me')
+  @ApiBearerAuth()
   async me(@Req() req: { user: User }) {
     return req.user.getUserInfo();
   }

@@ -9,6 +9,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksDto } from './dto/get-tasks.dto';
@@ -19,6 +20,7 @@ import { GetTasksQuery } from '../application/get-tasks/get-tasks.query';
 import { UpdateTaskCommand } from '../application/update-tasks/update-tasks.command';
 
 @Controller('tasks')
+@ApiBearerAuth()
 export class TasksController {
   constructor(
     private readonly queryBus: QueryBus,
@@ -31,9 +33,9 @@ export class TasksController {
   }
 
   @Post('/')
-  async createTask(@Body() createTaskDto: CreateTaskDto, @Req() req: any) {
+  async createTask(@Body() body: CreateTaskDto, @Req() req: any) {
     const command = new CreateTaskCommand({
-      ...createTaskDto,
+      ...body,
       userId: req.user.id,
     });
     return this.commandBus.execute(command);
