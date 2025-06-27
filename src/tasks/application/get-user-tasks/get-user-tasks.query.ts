@@ -1,4 +1,4 @@
-export class GetTasksQuery {
+export class GetUserTasksQuery {
   constructor(
     readonly userId: string,
     readonly filters?: {

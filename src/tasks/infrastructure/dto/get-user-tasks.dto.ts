@@ -3,7 +3,7 @@ import { IsString, IsOptional, IsNumber, Min, Max } from 'class-validator';
 
 import { IsObjectId } from 'src/shared/validation';
 
-export class GetTasksDto {
+export class GetUserTasksDto {
   @IsOptional()
   @IsString()
   terms?: string;

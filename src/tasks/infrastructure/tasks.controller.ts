@@ -12,11 +12,11 @@ import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { CreateTaskDto } from './dto/create-task.dto';
-import { GetTasksDto } from './dto/get-tasks.dto';
+import { GetUserTasksDto } from './dto/get-user-tasks.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 import { CreateTaskCommand } from '../application/create-tasks/create-task.command';
-import { GetTasksQuery } from '../application/get-tasks/get-tasks.query';
+import { GetUserTasksQuery } from '../application/get-user-tasks/get-user-tasks.query';
 import { UpdateTaskCommand } from '../application/update-tasks/update-tasks.command';
 
 @Controller('tasks')
@@ -28,8 +28,8 @@ export class TasksController {
   ) {}
 
   @Get('/')
-  async getTasks(@Query() filters: GetTasksDto, @Req() req: any) {
-    return this.queryBus.execute(new GetTasksQuery(req.user.id, filters));
+  async getTasks(@Query() filters: GetUserTasksDto, @Req() req: any) {
+    return this.queryBus.execute(new GetUserTasksQuery(req.user.id, filters));
   }
 
   @Post('/')
