@@ -37,7 +37,7 @@
     "@nestjs/mongoose": "^10.0.10",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.4.1",
-    "@nestjs/swagger": "^11.2.0",
+    "@nestjs/swagger": "^7.4.0",
     "@nestlab/google-recaptcha": "^3.8.0",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",

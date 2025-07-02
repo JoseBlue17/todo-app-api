@@ -10,24 +10,26 @@ export class GetUserTasksHandler implements IQueryHandler<GetUserTasksQuery> {
 
   async execute(query: GetUserTasksQuery) {
     const pageSize = 10;
-    const selectFields = query.select || {
-      title: true,
-      description: true,
-      completed: true,
-      category: true,
-      dueDate: true,
+
+    const result = await this.taskRepository.searchTasks({
+      userId: query.userId,
+      terms: query.filters?.terms,
+      cursor: query.filters?.cursor,
+      size: query.filters?.size || pageSize,
+    });
+
+    const filteredTasks = result.tasks.map(task => ({
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      completed: task.completed,
+      category: task.category,
+      dueDate: task.dueDate,
+    }));
+
+    return {
+      tasks: filteredTasks,
+      cursor: result.cursor,
     };
-
-    const result = await this.taskRepository.searchTasks(
-      {
-        userId: query.userId,
-        terms: query.filters?.terms,
-        cursor: query.filters?.cursor,
-        size: query.filters?.size || pageSize,
-      },
-      selectFields,
-    );
-
-    return result;
   }
 }
