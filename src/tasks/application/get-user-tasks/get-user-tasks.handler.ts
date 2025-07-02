@@ -20,7 +20,9 @@ export class GetUserTasksHandler implements IQueryHandler<GetUserTasksQuery> {
 
     const result = await this.taskRepository.searchTasks(
       {
-        ...query,
+        userId: query.userId,
+        terms: query.filters?.terms,
+        cursor: query.filters?.cursor,
         size: query.filters?.size || pageSize,
       },
       selectFields,
