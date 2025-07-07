@@ -1,4 +1,4 @@
-export class GetTasksQuery {
+export class GetUserTasksQuery {
   constructor(
     readonly userId: string,
     readonly filters?: {
@@ -6,5 +6,6 @@ export class GetTasksQuery {
       cursor?: string;
       size?: number;
     },
+    readonly select?: { [key: string]: boolean },
   ) {}
 }

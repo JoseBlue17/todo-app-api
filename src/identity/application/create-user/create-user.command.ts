@@ -1,9 +1,10 @@
-import { CreateUserDto } from 'src/identity/infrastructure/dto/create-user.dto';
-
 export class CreateUserCommand {
-  readonly userData: CreateUserDto;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly email: string;
+  readonly password: string;
 
-  constructor(data: CreateUserDto) {
-    this.userData = data;
+  constructor(params: CreateUserCommand) {
+    Object.assign(this, params);
   }
 }

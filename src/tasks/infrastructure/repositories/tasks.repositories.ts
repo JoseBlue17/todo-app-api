@@ -30,7 +30,7 @@ type TaskFilters = {
   size?: number;
 };
 
-type TaskSelect = { [key in keyof TaskDocument]?: boolean };
+type TaskSelect = { [key in keyof Task]?: boolean };
 
 @Injectable()
 export class TaskRepository {
@@ -66,16 +66,17 @@ export class TaskRepository {
     return updatedTask;
   }
 
-  async searchTasks(filters: TaskFilters, select?: TaskSelect) {
+  async searchTasks(filters: TaskFilters, select: TaskSelect) {
     const query = this.taskModel.find({
       userId: new Types.ObjectId(filters.userId),
     });
 
     if (filters.terms) {
+      const searchTerm = filters.terms.toLowerCase().trim();
       query.merge({
         $or: [
-          { title: { $regex: filters.terms, $options: 'i' } },
-          { description: { $regex: filters.terms, $options: 'i' } },
+          { title: { $regex: searchTerm, $options: 'i' } },
+          { description: { $regex: searchTerm, $options: 'i' } },
         ],
       });
     }

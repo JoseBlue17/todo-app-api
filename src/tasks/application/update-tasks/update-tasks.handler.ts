@@ -9,9 +9,7 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand> {
   constructor(private readonly taskRepository: TaskRepository) {}
 
   async execute(command: UpdateTaskCommand) {
-    const updatedTask = await this.taskRepository.updateTask({
-      ...command,
-    });
+    const updatedTask = await this.taskRepository.updateTask(command);
 
     return updatedTask;
   }
