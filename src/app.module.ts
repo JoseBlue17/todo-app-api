@@ -18,10 +18,11 @@ import { ClientRouteBuilder } from './shared/utils';
 import { JwtAuthGuard } from './shared/guards/jwt-auth.guard';
 import { MailModule } from './shared/mail';
 import { IdentityModule } from './identity/infrastructure/identity.module';
-import { PassportModule } from '@nestjs/passport';
-
+import { TasksModule } from './tasks/infrastructure/tasks.module';
+import { JwtStrategy } from './shared/strategies/jwt.strategy';
 @Module({
   imports: [
+    TasksModule,
     ConfigModule.forRoot({
       load: [
         apiConfig,
@@ -52,6 +53,7 @@ import { PassportModule } from '@nestjs/passport';
   controllers: [AppController],
   providers: [
     AppService,
+    JwtStrategy,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     {
       provide: ClientRouteBuilder,

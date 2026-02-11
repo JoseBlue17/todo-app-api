@@ -16,10 +16,13 @@ import {
 import { AntdValidationPipe } from './shared/validation';
 import { AppModule } from './app.module';
 import { ApiConfig } from './config/api.config';
+import { setupSwagger } from './config/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
+
+  setupSwagger(app);
 
   const loggerInstance = winston.createLogger(getLoggerConfig(config));
   app.useLogger(WinstonModule.createLogger({ instance: loggerInstance }));

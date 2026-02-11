@@ -5,6 +5,7 @@ import {
   ArgumentsHost,
   ExceptionFilter,
 } from '@nestjs/common';
+
 import { DomainError } from './domain.error';
 
 @Catch(DomainError)
