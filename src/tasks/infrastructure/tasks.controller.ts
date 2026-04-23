@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Req,
   Body,
   Query,
@@ -16,6 +17,7 @@ import { GetUserTasksDto } from './dto/get-user-tasks.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 import { CreateTaskCommand } from '../application/create-tasks/create-task.command';
+import { DeleteTaskCommand } from '../application/delete-task/delete-task.command';
 import { GetUserTasksQuery } from '../application/get-user-tasks/get-user-tasks.query';
 import { UpdateTaskCommand } from '../application/update-tasks/update-tasks.command';
 
@@ -51,6 +53,15 @@ export class TasksController {
       ...body,
       userId: req.user.id,
       taskId: id,
+    });
+    return this.commandBus.execute(command);
+  }
+
+  @Delete('/:id')
+  async deleteTask(@Param('id') id: string, @Req() req: any) {
+    const command = new DeleteTaskCommand({
+      taskId: id,
+      userId: req.user.id,
     });
     return this.commandBus.execute(command);
   }
