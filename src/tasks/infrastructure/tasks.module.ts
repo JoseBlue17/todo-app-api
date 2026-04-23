@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { CreateTaskHandler } from '../application/create-tasks/create-task.handler';
+import { DeleteTaskHandler } from '../application/delete-task/delete-task.handler';
 import { GetUserTasksHandler } from '../application/get-user-tasks/get-user-tasks.handler';
 import { UpdateTaskHandler } from '../application/update-tasks/update-tasks.handler';
 
@@ -18,6 +19,7 @@ import { TasksController } from './tasks.controller';
   controllers: [TasksController],
   providers: [
     CreateTaskHandler,
+    DeleteTaskHandler,
     GetUserTasksHandler,
     TaskRepository,
     UpdateTaskHandler,

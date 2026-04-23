@@ -66,6 +66,17 @@ export class TaskRepository {
     return updatedTask;
   }
 
+  async deleteTask(taskId: string, userId: string) {
+    const deleted = await this.taskModel.findOneAndDelete({
+      _id: new Types.ObjectId(taskId),
+      userId: new Types.ObjectId(userId),
+    });
+    if (!deleted) {
+      throw new Error('Task not found');
+    }
+    return deleted;
+  }
+
   async searchTasks(filters: TaskFilters, select: TaskSelect) {
     const query = this.taskModel.find({
       userId: new Types.ObjectId(filters.userId),
